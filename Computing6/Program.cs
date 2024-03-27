@@ -22,6 +22,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+//app.UseCors(plicy => PolicyServiceCollectionExtensions.AllowAnyHeader())
+
 app.UseAuthorization();
 
 app.MapControllers();
