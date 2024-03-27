@@ -4,6 +4,7 @@ using Computing6.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Computing6.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240327034839_BillAdded")]
+    partial class BillAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,35 +24,6 @@ namespace Computing6.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Computing6.Models.Student.Book", b =>
-                {
-                    b.Property<int>("BookId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BookId"));
-
-                    b.Property<string>("Author")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateOnly>("RentedOnly")
-                        .HasColumnType("date");
-
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("BookId");
-
-                    b.HasIndex("StudentId");
-
-                    b.ToTable("Book");
-                });
 
             modelBuilder.Entity("Computing6.Models.Student.Student", b =>
                 {
@@ -104,17 +78,6 @@ namespace Computing6.Migrations
                     b.ToTable("bill");
                 });
 
-            modelBuilder.Entity("Computing6.Models.Student.Book", b =>
-                {
-                    b.HasOne("Computing6.Models.Student.Student", "Student")
-                        .WithMany("Books")
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Student");
-                });
-
             modelBuilder.Entity("Computing6.Models.Student.bill", b =>
                 {
                     b.HasOne("Computing6.Models.Student.Student", null)
@@ -126,8 +89,6 @@ namespace Computing6.Migrations
 
             modelBuilder.Entity("Computing6.Models.Student.Student", b =>
                 {
-                    b.Navigation("Books");
-
                     b.Navigation("bill")
                         .IsRequired();
                 });
